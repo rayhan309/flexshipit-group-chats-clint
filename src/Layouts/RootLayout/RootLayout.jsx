@@ -1,18 +1,26 @@
-import React from 'react';
-import { Outlet } from 'react-router';
-import Navber from '../../Components/Navber';
-import Footer from '../../Components/Footer';
+import React from "react";
+import { Outlet } from "react-router";
+import Navber from "../../Components/Navber";
+import Footer from "../../Components/Footer";
+import { ToastContainer } from "react-toastify";
+import { use } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 const RootLayout = () => {
-    return (
-        <div>
-            <Navber />
-           <main className={`min-h-[calc(100vh-340px)]`}>
-             <Outlet />
-           </main>
-            <Footer />
-        </div>
-    );
+  const { loading } = use(AuthContext);
+//   console.log({ user: user, loading: loading });
+  return loading ? (
+    "Loading..."
+  ) : (
+    <div>
+      <Navber />
+      <main className={`min-h-[calc(100vh-340px)]`}>
+        <Outlet />
+      </main>
+      <Footer />
+      <ToastContainer />
+    </div>
+  );
 };
 
 export default RootLayout;
