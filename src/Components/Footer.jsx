@@ -1,53 +1,62 @@
-import React from 'react';
+import React from "react";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
-    return (
-        <footer className="bg-linear-to-r from-blue-500 to-teal-400 text-white py-8">
-            <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-start md:items-center space-y-6 md:space-y-0">
+  return (
+    <footer className="bg-gray-900 text-white pt-12 pb-6">
+      <div className="container mx-auto px-6 grid md:grid-cols-3 gap-12">
 
-                {/* Logo & Description */}
-                <div className="flex flex-col space-y-2">
-                    <div className="flex items-center space-x-2">
-                        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                            <span className="text-blue-500 font-bold text-lg">C</span>
-                        </div>
-                        <span className="font-bold text-xl">ChatNest</span>
-                    </div>
-                    <p className="text-sm max-w-xs">
-                        Connect, chat, and feel at home. ChatNest makes communication safe, fast, and easy.
-                    </p>
-                </div>
-
-                {/* Quick Links */}
-                <div className="flex flex-col space-y-2">
-                    <h3 className="font-semibold text-lg">Quick Links</h3>
-                    <ul className="space-y-1 text-sm">
-                        <li className="hover:underline cursor-pointer">Home</li>
-                        <li className="hover:underline cursor-pointer">Features</li>
-                        <li className="hover:underline cursor-pointer">Pricing</li>
-                        <li className="hover:underline cursor-pointer">About</li>
-                        <li className="hover:underline cursor-pointer">Contact</li>
-                    </ul>
-                </div>
-
-                {/* Social Media */}
-                <div className="flex flex-col space-y-2">
-                    <h3 className="font-semibold text-lg">Follow Us</h3>
-                    <div className="flex space-x-4">
-                        <a href="#" className="hover:text-gray-200 transition">Facebook</a>
-                        <a href="#" className="hover:text-gray-200 transition">Twitter</a>
-                        <a href="#" className="hover:text-gray-200 transition">Instagram</a>
-                        <a href="#" className="hover:text-gray-200 transition">LinkedIn</a>
-                    </div>
-                </div>
+        {/* Logo & Description */}
+        <div className="space-y-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">
+              C
             </div>
+            <span className="text-xl font-bold">ChatNest</span>
+          </div>
+          <p className="text-gray-400 text-sm max-w-xs">
+            Connect, chat, and feel at home. ChatNest makes communication safe, fast, and effortless.
+          </p>
+        </div>
 
-            {/* Bottom Text */}
-            <div className="mt-8 text-center text-sm text-white/80">
-                &copy; {new Date().getFullYear()} ChatNest. All rights reserved.
-            </div>
-        </footer>
-    );
+        {/* Quick Links */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Quick Links</h3>
+          <ul className="space-y-2 text-gray-400 text-sm">
+            {["Home", "Features", "Pricing", "About", "Contact"].map((link, i) => (
+              <li key={i} className="hover:text-white transition cursor-pointer">
+                {link}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Social Media */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Follow Us</h3>
+          <div className="flex space-x-4 text-gray-400">
+            <a href="#" className="hover:text-white transition">
+              <FaFacebookF size={18} />
+            </a>
+            <a href="#" className="hover:text-white transition">
+              <FaTwitter size={18} />
+            </a>
+            <a href="#" className="hover:text-white transition">
+              <FaInstagram size={18} />
+            </a>
+            <a href="#" className="hover:text-white transition">
+              <FaLinkedinIn size={18} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="mt-12 text-center text-gray-500 text-sm">
+        &copy; {new Date().getFullYear()} ChatNest. All rights reserved.
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

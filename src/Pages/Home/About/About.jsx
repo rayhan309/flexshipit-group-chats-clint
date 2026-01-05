@@ -1,53 +1,61 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 const About = () => {
-    return (
-        <section className="py-20 my-bg mb-2">
-            <div className="container mx-auto px-4 flex flex-col md:flex-row items-center md:space-x-12">
-                
-                {/* Image or Illustration */}
-                <motion.div
-                    className="md:w-1/2 mb-10 md:mb-0"
-                    initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1 }}
-                    viewport={{ once: true }}
-                >
-                    <img
-                        src="https://cdn-icons-png.flaticon.com/512/4140/4140041.png"
-                        alt="About ChatNest"
-                        className="w-full md:w-[400px] mx-auto"
-                    />
-                </motion.div>
+  return (
+    <section className="py-24">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
 
-                {/* Text Content */}
-                <motion.div
-                    className="md:w-1/2 space-y-6 text-center md:text-left"
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1 }}
-                    viewport={{ once: true }}
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold text-blue-600">
-                        About ChatNest
-                    </h2>
-                    <p className="text-gray-600 text-lg md:text-xl">
-                        ChatNest was created with a mission to make communication effortless, secure, and fun. 
-                        Our platform connects people around the world and ensures a seamless chatting experience 
-                        for everyone.
-                    </p>
-                    <p className="text-gray-600 text-lg md:text-xl">
-                        Whether you want to chat one-on-one or with a group, share media, or enjoy a safe messaging 
-                        environment, ChatNest is your go-to app for staying connected.
-                    </p>
-                    <button className="mt-4 bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition">
-                        Learn More
-                    </button>
-                </motion.div>
-            </div>
-        </section>
-    );
+        {/* Visual / Illustration */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="flex justify-center"
+        >
+          <div className="relative bg-linear-to-br from-blue-100 to-indigo-100 rounded-3xl p-10 shadow-lg">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/4140/4140041.png"
+              alt="About ChatNest"
+              className="w-72 mx-auto"
+            />
+          </div>
+        </motion.div>
+
+        {/* Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9 }}
+          className="space-y-6"
+        >
+          <span className="inline-block text-sm font-semibold text-blue-600 bg-blue-100 px-4 py-1 rounded-full">
+            About Us
+          </span>
+
+          <h2 className="text-3xl md:text-4xl font-bold text-white/70 leading-tight">
+            Built for Meaningful & Secure Conversations
+          </h2>
+
+          <p className="text-gray-500 text-lg leading-relaxed">
+            ChatNest is a modern communication platform designed to bring people closer through fast, secure, and intuitive messaging.
+            We focus on privacy, performance, and simplicity—so you can communicate without distractions.
+          </p>
+
+          <p className="text-gray-500 text-lg leading-relaxed">
+            From private one-on-one conversations to dynamic group chats and media sharing, ChatNest delivers
+            a reliable experience that feels natural, safe, and effortless.
+          </p>
+
+          <button className="inline-flex items-center justify-center bg-blue-600/50 text-white px-7 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
+            Learn More
+          </button>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
 export default About;

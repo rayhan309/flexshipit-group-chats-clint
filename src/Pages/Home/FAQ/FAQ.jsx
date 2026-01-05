@@ -1,90 +1,104 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaChevronDown } from "react-icons/fa";
 
 const FAQ = () => {
-    const faqs = [
-        {
-            question: "How do I create a ChatNest account?",
-            answer: "Simply click on the 'Sign Up' button on the homepage and follow the registration steps. You can use your email or phone number."
-        },
-        {
-            question: "Is my chat secure?",
-            answer: "Yes! ChatNest uses end-to-end encryption to ensure that your conversations remain private and secure."
-        },
-        {
-            question: "Can I use ChatNest on multiple devices?",
-            answer: "Absolutely! You can log in to your account from your phone, tablet, or computer and access all your chats."
-        },
-        {
-            question: "How can I upgrade to a premium plan?",
-            answer: "Go to the 'Pricing' section, select your desired plan, and follow the checkout instructions to upgrade."
-        },
-    ];
+  const faqs = [
+    {
+      question: "How do I create a ChatNest account?",
+      answer:
+        "Click the Sign Up button on the homepage and complete the registration using your email or phone number."
+    },
+    {
+      question: "Is my chat data secure?",
+      answer:
+        "Yes. ChatNest uses advanced end-to-end encryption to keep your conversations private and protected."
+    },
+    {
+      question: "Can I use ChatNest on multiple devices?",
+      answer:
+        "Absolutely. You can access your account from multiple devices and sync chats seamlessly."
+    },
+    {
+      question: "How do I upgrade my plan?",
+      answer:
+        "Visit the Pricing section, choose your preferred plan, and follow the secure checkout process."
+    }
+  ];
 
-    const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
 
-    const toggleFAQ = (index) => {
-        if (openIndex === index) {
-            setOpenIndex(null);
-        } else {
-            setOpenIndex(index);
-        }
-    };
+  return (
+    <section className="py-24">
+      <div className="container mx-auto px-6">
 
-    return (
-        <section className="py-20 my-bg mb-2">
-            <div className="container mx-auto px-4 text-center">
-                <motion.h2
-                    className="text-3xl md:text-4xl font-bold mb-6 text-blue-600"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+        {/* Header */}
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white/70">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-gray-500 text-lg">
+            Quick answers to the most common questions about ChatNest.
+          </p>
+        </motion.div>
+
+        {/* FAQ List */}
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndex === index;
+
+            return (
+              <div
+                key={index}
+                className="border border-gray-200 rounded-2xl bg-white"
+              >
+                {/* Question */}
+                <button
+                  onClick={() => setOpenIndex(isOpen ? null : index)}
+                  className="w-full flex items-center justify-between px-6 py-5 text-left"
                 >
-                    Frequently Asked Questions
-                </motion.h2>
-                <motion.p
-                    className="text-gray-600 mb-12 max-w-2xl mx-auto"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                >
-                    Here are some of the most common questions about ChatNest.
-                </motion.p>
+                  <span className="text-lg font-medium text-gray-900">
+                    {faq.question}
+                  </span>
 
-                {/* FAQ Accordion */}
-                <div className="max-w-3xl mx-auto space-y-4 text-left">
-                    {faqs.map((faq, index) => (
-                        <motion.div
-                            key={index}
-                            className="bg-white rounded-xl shadow-md p-6 cursor-pointer"
-                            whileHover={{ scale: 1.02 }}
-                            onClick={() => toggleFAQ(index)}
-                        >
-                            <div className="flex justify-between items-center">
-                                <h3 className="font-semibold text-lg">{faq.question}</h3>
-                                {openIndex === index ? (
-                                    <FaChevronUp className="text-blue-500" />
-                                ) : (
-                                    <FaChevronDown className="text-blue-500" />
-                                )}
-                            </div>
-                            {openIndex === index && (
-                                <motion.p
-                                    className="mt-4 text-gray-600"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {faq.answer}
-                                </motion.p>
-                            )}
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+                  <motion.span
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-blue-600"
+                  >
+                    <FaChevronDown />
+                  </motion.span>
+                </button>
+
+                {/* Answer */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-6 pb-5 text-gray-600 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default FAQ;

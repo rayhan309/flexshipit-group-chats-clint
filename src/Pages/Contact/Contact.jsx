@@ -4,7 +4,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Contact = () => {
     return (
-        <section className="py-20 my-bg my-2">
+        <section className="py-20 my-2">
             <div className="container mx-auto px-4">
                 
                 {/* Section Heading */}

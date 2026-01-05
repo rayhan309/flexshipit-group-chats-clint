@@ -1,59 +1,79 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const Banner = () => {
-    return (
-        <section className="mb-2 mt-2 bg-linear-to-r from-blue-500 to-teal-400 text-white min-h-screen flex items-center">
-            <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-                
-                {/* Text Content */}
-                <motion.div
-                    className="md:w-1/2 space-y-6"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1 }}
-                >
-                    <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                        Welcome to <span className="text-yellow-300">ChatNest</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-white/90">
-                        Connect, chat, and feel at home. ChatNest makes communication safe, fast, and easy.
-                    </p>
-                    
-                    {/* Call to Action Buttons */}
-                    <div className="flex space-x-4 mt-4">
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-gray-100 transition"
-                        >
-                            Get Started
-                        </motion.button>
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="bg-white/20 text-white px-6 py-3 rounded-lg font-semibold border border-white hover:bg-white/30 transition"
-                        >
-                            Learn More
-                        </motion.button>
-                    </div>
-                </motion.div>
+  return (
+    <section className="relative my-2 min-h-screen bg-gradient-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5 text-white flex items-center overflow-hidden">
+      
+      {/* Background Blur Shapes */}
+      <div className="absolute top-[-100px] left-[-100px] w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-[-120px] right-[-120px] w-96 h-96 bg-white/10 rounded-full blur-3xl" />
 
-                {/* Image or Illustration */}
-                <motion.div
-                    className="md:w-1/2 mt-10 md:mt-0 flex justify-center"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1 }}
-                >
-                    <img
-                        src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
-                        alt="Chat Illustration"
-                        className="w-80 md:w-[400px] animate-bounce"
-                    />
-                </motion.div>
+      <div className="relative container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        
+        {/* Left Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="space-y-6"
+        >
+          <span className="inline-block bg-white/20 px-4 py-1 rounded-full text-sm font-medium">
+            🚀 Next-Gen Chat Platform
+          </span>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+            Welcome to <span className="text-yellow-300">ChatNest</span>
+          </h1>
+
+          <p className="text-lg text-white/90 max-w-xl">
+            A modern and secure real-time messaging platform where conversations feel natural, fast, and reliable.
+          </p>
+
+          {/* Feature Points */}
+          <div className="flex gap-6 text-sm text-white/90">
+            <span>🔒 Secure</span>
+            <span>⚡ Fast</span>
+            <span>💬 Real-time</span>
+          </div>
+
+          {/* CTA */}
+          <div className="flex gap-4 pt-4">
+            <button className="bg-white text-indigo-600 px-7 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition">
+              Get Started
+            </button>
+            <button className="border border-white/40 px-7 py-3 rounded-xl font-semibold hover:bg-white/10 transition">
+              Learn More
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Right Mockup */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1 }}
+          className="flex justify-center"
+        >
+          <div className="bg-white/15 backdrop-blur-xl rounded-2xl p-6 w-80 md:w-96 shadow-2xl">
+            <div className="space-y-3">
+              <div className="h-4 w-1/2 bg-white/40 rounded"></div>
+              <div className="h-4 w-3/4 bg-white/30 rounded"></div>
+              <div className="h-4 w-2/3 bg-white/20 rounded"></div>
             </div>
-        </section>
-    );
+
+            <div className="mt-6 space-y-3">
+              <div className="bg-indigo-500/80 p-3 rounded-xl text-sm">
+                Hey! Welcome to ChatNest 👋
+              </div>
+              <div className="bg-white/30 p-3 rounded-xl text-sm">
+                This feels smooth and professional 😍
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 };
 
 export default Banner;

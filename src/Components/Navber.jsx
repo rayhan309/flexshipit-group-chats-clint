@@ -27,7 +27,7 @@ const Navber = () => {
   );
 
   return (
-    <nav className="bg-linear-to-r from-blue-500 to-teal-400 p-4 shadow-md">
+    <nav className="bg-gray-900/10 p-4 shadow-md">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo Section */}
         <Link className="flex items-center space-x-2">

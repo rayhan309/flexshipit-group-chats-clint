@@ -4,8 +4,12 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  font-weight: 100;
   font-style: normal;
+}
+
+body {
+  @apply bg-gradient-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5;
+  background-attachment: fixed; /* subtle parallax effect */
 }
 
 .my-bg {
