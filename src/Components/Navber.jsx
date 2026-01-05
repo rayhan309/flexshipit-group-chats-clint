@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Navber = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = use(AuthContext);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -15,7 +17,9 @@ const Navber = () => {
       </li>
       <li className="hover:underline cursor-pointer">Features</li>
       <li className="hover:underline cursor-pointer">Pricing</li>
-      <li className="hover:underline cursor-pointer"><Link to={'/chats'}>Chats</Link></li>
+      <li className="hover:underline cursor-pointer">
+        <Link to={"/chats"}>Chats</Link>
+      </li>
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/contact"}>Contact</NavLink>
       </li>
@@ -39,20 +43,26 @@ const Navber = () => {
         </ul>
 
         {/* Desktop Action Buttons */}
-        <div className="hidden md:flex space-x-4">
-          <Link
-            to={"/login"}
-            className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
-          >
-            Login
-          </Link>
-          <Link
-            to={"/register"}
-            className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
-          >
-            Sign Up
-          </Link>
-        </div>
+        {user ? (
+         <div>
+          <img className="w-10 h-10 rounded-full" src={user?.photoURL} alt={user?.displayName} />
+         </div>
+        ) : (
+          <div className="hidden md:flex space-x-4">
+            <Link
+              to={"/login"}
+              className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
+            >
+              Login
+            </Link>
+            <Link
+              to={"/register"}
+              className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
 
         {/* Mobile Hamburger Menu */}
         <div

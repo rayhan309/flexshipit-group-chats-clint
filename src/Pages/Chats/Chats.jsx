@@ -10,36 +10,63 @@ const Chats = () => {
   const { user } = use(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  // console.log(user?.displayName);
+  // const [typingUser, setTypingUser] = useState([]);
+  // console.log(newMessage);
+
   useEffect(() => {
-    socket.on("connect", () => {
+    if (!user?.displayName) return;
 
-    if(!user) return;
+    socket.emit("userName", user.displayName);
 
-      socket.emit("userName", user?.displayName);
-
-      socket.on("roomNotice", (userName) => {
-        console.log({ newUser: userName });
-      });
-
-      socket.on("receiveMessage", (message) => {
-        setMessages((prev) => [...prev, message]);
-      });
+    socket.on("roomNotice", (userName) => {
+      console.log("New user:", userName);
     });
 
-    return () => socket.off("receiveMessage");
+    socket.on("oldMessages", (messages) => {
+      setMessages(messages);
+    });
+
+    socket.on("receiveMessage", (message) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    return () => {
+      socket.off("roomNotice");
+      socket.off("oldMessages");
+      socket.off("receiveMessage");
+    };
   }, [user?.displayName]);
+
+  // useEffect(() => {
+  //   socket.on("typer", (typerName) => {
+  //     setTypingUser(typerName);
+  //   });
+
+  //   return () => socket.off("typer");
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!newMessage?.trim()) return;
+
+  //   const timeout = setTimeout(() => {
+  //     socket.emit("typing", user.displayName);
+  //   }, 300);
+
+  //   return () => clearTimeout(timeout);
+  // }, [newMessage]);
+
+  // if (!newMessage?.trim()) if (!newMessage?.trim());
 
   const handleSend = () => {
     if (!newMessage.trim()) return;
 
     const messageData = {
       text: newMessage,
-      sender: "me",
+      sender: user?.displayName,
       time: new Date().toLocaleTimeString(),
     };
 
-    setMessages((prev) => [...prev, messageData]);
+    // setMessages((prev) => [...prev, messageData]);
 
     socket.emit("sendMessage", messageData);
     setNewMessage("");
@@ -50,6 +77,7 @@ const Chats = () => {
       {/* Header */}
       <div className="p-4 bg-blue-500 text-white font-bold">
         ChatNest – Real-Time Chat
+        {/* {typingUser && <p>{typingUser} is typing...</p>} */}
       </div>
 
       {/* Messages */}
@@ -58,13 +86,15 @@ const Chats = () => {
           <div
             key={index}
             className={`max-w-xs px-4 py-2 rounded-lg ${
-              msg.sender === "me"
+              msg.sender === user?.displayName
                 ? "ml-auto bg-blue-500 text-white"
                 : "bg-white text-gray-700"
             }`}
           >
             <p>{msg.text}</p>
             <span className="text-xs opacity-70">{msg.time}</span>
+
+            <p>{index + 1}</p>
           </div>
         ))}
       </div>

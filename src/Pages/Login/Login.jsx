@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
+import { AuthContext } from '../../Context/AuthContext';
 
 const Login = () => {
+    const {sigInUser} = use(AuthContext);
     const {
         register,
         handleSubmit,
@@ -12,7 +14,11 @@ const Login = () => {
 
     const onSubmit = (data) => {
         console.log("Form Data:", data);
-        alert(`Welcome back, ${data.email}!`);
+        sigInUser(data?.email, data?.password).then(() => {
+            alert(`Welcome back!`);
+        }).catch((err) => {
+            console.log(err)
+        });
     };
 
     return (
