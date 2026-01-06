@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { FaPaperPlane } from "react-icons/fa";
+import {
+  FaHeadset,
+  FaPaperclip,
+  FaPaperPlane,
+  FaPhotoVideo,
+} from "react-icons/fa";
 import { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -100,7 +105,17 @@ const Chats = () => {
       </div>
 
       {/* Input */}
-      <div className="p-4 bg-white/20 border-t flex gap-3">
+      <div className="p-4 relative bg-white/20 border-t flex gap-3">
+        <div className={`absolute top-0`}>
+          <FaPhotoVideo />
+        </div>
+        <button
+          onClick={() => {}}
+          className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600"
+        >
+          <FaPaperclip />
+        </button>
+
         <input
           type="text"
           placeholder="Type a message..."
@@ -113,6 +128,10 @@ const Chats = () => {
           className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600"
         >
           <FaPaperPlane />
+        </button>
+
+        <button className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600">
+          <FaHeadset />
         </button>
       </div>
     </div>

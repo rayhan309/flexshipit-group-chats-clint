@@ -12,7 +12,7 @@ const RootLayout = () => {
   return loading ? (
     "Loading..."
   ) : (
-    <div>
+    <div className="z-50">
       <Navber />
       <main className={`min-h-[calc(100vh-340px)]`}>
         <Outlet />
