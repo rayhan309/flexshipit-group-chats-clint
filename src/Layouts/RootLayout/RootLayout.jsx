@@ -5,12 +5,13 @@ import Footer from "../../Components/Footer";
 import { ToastContainer } from "react-toastify";
 import { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import Loading from "../../Pages/Loading/Loading";
 
 const RootLayout = () => {
   const { loading } = use(AuthContext);
 //   console.log({ user: user, loading: loading });
   return loading ? (
-    "Loading..."
+    <Loading />
   ) : (
     <div className="z-50">
       <Navber />

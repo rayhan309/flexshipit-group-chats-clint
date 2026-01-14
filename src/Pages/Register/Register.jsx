@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
+import axios from "axios";
 
 const Register = () => {
   const { createUser, updateUserProfile } = use(AuthContext);
@@ -15,22 +16,67 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    try {
-      createUser(data?.email, data?.confirmPassword)
-        .then(() => {
-          updateUserProfile(data?.name, data?.photo).then(() => {
-            navigate('/')
-            toast.success("SingUp Successfull!");
-          });
-        })
-        .catch((err) => toast.error(err));
-    } catch {
-      toast.error("SingUp has not a success!");
+  // const onSubmit = (data) => {
+  //   const photoCheck = data?.photo[0];
+
+  //   const IMAGEBB_SDK = import.meta.env.IMAGEBB_SDK
+  //   console.log(IMAGEBB_SDK);
+
+  //   console.log(photoCheck);
+  //   // try {
+  //   //   createUser(data?.email, data?.confirmPassword)
+  //   //     .then(() => {
+  //   //       updateUserProfile(data?.name, data?.photo).then(() => {
+  //   //         navigate('/');
+  //   //         toast.success("SingUp Successfull!");
+  //   //       });
+  //   //     })
+  //   //     .catch((err) => toast.error(err));
+  //   // } catch {
+  //   //   toast.error("SingUp has not a success!");
+  //   // }
+  //   // console.log("Registration Data:", data);
+  //   // alert(`Welcome to ChatNest, ${data.name}!`);
+  // };
+
+const onSubmit = async (data) => {
+  try {
+    if (!data?.photo?.length) {
+      return toast.error("Please select an image");
     }
-    // console.log("Registration Data:", data);
-    // alert(`Welcome to ChatNest, ${data.name}!`);
-  };
+
+    const imageFile = data.photo[0];
+    const IMAGEBB_SDK = import.meta.env.VITE_IMAGEBB_SDK;
+
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    const res = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${IMAGEBB_SDK}`,
+      formData
+    );
+
+    const photoURL = res.data.data.url;
+
+    if (!photoURL) {
+      return toast.error("Image upload failed!");
+    }
+
+    // console.log("Image URL:", photoURL);
+
+    await createUser(data.email, data.confirmPassword);
+    await updateUserProfile(data.name, photoURL);
+
+    navigate('/')
+
+    toast.success("Image uploaded successfully!");
+
+  } catch (error) {
+    console.error(error);
+    toast.error(error.message || "Signup failed!");
+  }
+};
+
 
   const password = watch("password", "");
 
@@ -71,8 +117,8 @@ const Register = () => {
               Photo URL
             </label>
             <input
-              type="text"
-              placeholder="Photo URL"
+              type="file"
+              accept="image"
               {...register("photo", { required: "Photo is required" })}
               className={`w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${
                 errors.photo
@@ -124,8 +170,8 @@ const Register = () => {
               {...register("password", {
                 required: "Password is required",
                 minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
+                  value: 8,
+                  message: "Password must be at least 8 characters",
                 },
               })}
               className={`w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${

@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import { use } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router';
@@ -14,7 +14,7 @@ const Login = () => {
     } = useForm();
     const loacation = useLocation();
     const navigate = useNavigate();
-    console.log(loacation)
+    // console.log(loacation);
 
     const onSubmit = (data) => {
         // console.log("Form Data:", data);

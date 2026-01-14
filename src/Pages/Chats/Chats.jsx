@@ -4,10 +4,10 @@ import {
   FaHeadset,
   FaPaperclip,
   FaPaperPlane,
-  FaPhotoVideo,
 } from "react-icons/fa";
 import { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import { formatDistanceToNow } from "date-fns";
 
 const socket = io(import.meta.env.VITE_serverURL);
 
@@ -78,8 +78,15 @@ const Chats = () => {
           >
             <h2 className="text-lg font-bold">{msg.sender}</h2>
             <p>{msg.text}</p>
-            <span className="text-xs opacity-70">{msg.time}</span>
-            
+            {/* <span className="text-xs opacity-70">{msg.time}</span> */}
+              <span className="text-xs">
+                    {/* {chat.time}{" "} */}
+                    {msg.time
+                      ? formatDistanceToNow(new Date(msg.time), {
+                          addSuffix: true,
+                        })
+                      : "Recently"}
+                  </span>
           </div>
         ))}
       </div>
