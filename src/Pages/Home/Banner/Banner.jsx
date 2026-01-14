@@ -9,7 +9,7 @@ const Banner = () => {
   // console.log(user);
   return (
     <div>
-      <section className="relative my-2 min-h-screen bg-linear-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5 text-white flex items-center overflow-hidden">
+      <section className="relative bg-linear-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5 text-white flex items-center overflow-hidden py-12 md:py-16">
         {/* Background Blur Shapes */}
         <div className="absolute top-[-100px] left-[-100px] w-96 h-96 bg-white/10 rounded-full blur-3xl" />
         <div className="absolute bottom-[-120px] right-[-120px] w-96 h-96 bg-white/10 rounded-full blur-3xl" />

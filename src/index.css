@@ -16,6 +16,10 @@ body {
     @apply bg-linear-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5
 }
 
+li .active {
+  @apply text-primary underline
+}
+
 
 /* From Uiverse.io by SelfMadeSystem */ 
 /*

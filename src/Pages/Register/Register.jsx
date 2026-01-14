@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
+import useAxiosSuer from "../../hooks/useAxiosSuer";
 
 const Register = () => {
   const { createUser, updateUserProfile, userEmailVerify } = use(AuthContext);
@@ -15,76 +16,61 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const axiosSquer = useAxiosSuer();
+  // console.log(axiosSquer);
 
-  // const onSubmit = (data) => {
-  //   const photoCheck = data?.photo[0];
+  const onSubmit = async (data) => {
+    try {
+      if (!data?.photo?.length) {
+        return toast.error("Please select an image");
+      }
 
-  //   const IMAGEBB_SDK = import.meta.env.IMAGEBB_SDK
-  //   console.log(IMAGEBB_SDK);
+      const imageFile = data.photo[0];
+      const IMAGEBB_SDK = import.meta.env.VITE_IMAGEBB_SDK;
 
-  //   console.log(photoCheck);
-  //   // try {
-  //   //   createUser(data?.email, data?.confirmPassword)
-  //   //     .then(() => {
-  //   //       updateUserProfile(data?.name, data?.photo).then(() => {
-  //   //         navigate('/');
-  //   //         toast.success("SingUp Successfull!");
-  //   //       });
-  //   //     })
-  //   //     .catch((err) => toast.error(err));
-  //   // } catch {
-  //   //   toast.error("SingUp has not a success!");
-  //   // }
-  //   // console.log("Registration Data:", data);
-  //   // alert(`Welcome to ChatNest, ${data.name}!`);
-  // };
+      const formData = new FormData();
+      formData.append("image", imageFile);
 
-const onSubmit = async (data) => {
-  try {
-    if (!data?.photo?.length) {
-      return toast.error("Please select an image");
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${IMAGEBB_SDK}`,
+        formData
+      );
+
+      const photoURL = res.data.data.url;
+
+      if (!photoURL) {
+        return toast.error("Image upload failed!");
+      }
+
+      // console.log("Image URL:", photoURL);
+
+      await createUser(data.email, data.confirmPassword);
+      await updateUserProfile(data.name, photoURL);
+      userEmailVerify();
+      navigate("/");
+
+      const newUser = {
+        name: data?.name,
+        email: data?.email,
+        photo: photoURL,
+      };
+
+      await axiosSquer.post(`/users`, newUser);
+
+
+      toast.success("Image uploaded successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message || "Signup failed!");
     }
-
-    const imageFile = data.photo[0];
-    const IMAGEBB_SDK = import.meta.env.VITE_IMAGEBB_SDK;
-
-    const formData = new FormData();
-    formData.append("image", imageFile);
-
-    const res = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${IMAGEBB_SDK}`,
-      formData
-    );
-
-    const photoURL = res.data.data.url;
-
-    if (!photoURL) {
-      return toast.error("Image upload failed!");
-    }
-
-    // console.log("Image URL:", photoURL);
-
-    await createUser(data.email, data.confirmPassword);
-    await updateUserProfile(data.name, photoURL);
-    userEmailVerify();
-
-    navigate('/');
-
-    toast.success("Image uploaded successfully!");
-
-  } catch (error) {
-    console.error(error);
-    toast.error(error.message || "Signup failed!");
-  }
-};
-
+  };
 
   const password = watch("password", "");
 
   return (
-    <div className="min-h-screen flex items-center justify-center my-5 mb-10">
+    <div className="min-h-screen flex items-center justify-center">
       <motion.div
-        className="bg-white/20 p-10 rounded-2xl shadow-xl w-full max-w-md"
+        className="my-bg border border-white/30 p-10 rounded-2xl shadow-xl w-full max-w-md"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}

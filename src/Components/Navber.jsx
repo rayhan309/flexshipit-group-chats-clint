@@ -1,10 +1,12 @@
-import React, { use, useState } from "react";
+import { use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import logo from "../assets/logo.png";
 
 const Navber = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOutUser } = use(AuthContext);
+  console.log(user);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -15,17 +17,17 @@ const Navber = () => {
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/"}>Home</NavLink>
       </li>
+      {user && (
+        <li className="hover:underline cursor-pointer">
+          <NavLink to={"/chats"}>Chats</NavLink>
+        </li>
+      )}
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/features"}>Features</NavLink>
       </li>
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/about"}>About</NavLink>
       </li>
-      {user && (
-        <li className="hover:underline cursor-pointer">
-          <Link to={"/chats"}>Chats</Link>
-        </li>
-      )}
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/contact"}>Contact</NavLink>
       </li>
@@ -37,10 +39,9 @@ const Navber = () => {
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo Section */}
         <Link className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            <span className="text-blue-500 font-bold text-lg">C</span>
-          </div>
-          <span className="text-white font-bold text-xl">ChatNest</span>
+          <img className="rounded-full w-10 h-10" src={logo} alt="chats logo" />
+
+          <span className="font-semibold text-2xl"><span className="text-primary">Chat</span>Nest</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -51,13 +52,13 @@ const Navber = () => {
         {/* Desktop Action Buttons */}
         {user ? (
           <div
-          title={user?.displayName}
+            title={user?.displayName}
             onClick={() => {
               signOutUser();
             }}
           >
             <img
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 hidden md:block cursor-pointer rounded-full"
               src={user?.photoURL}
               alt={user?.displayName}
             />
@@ -66,13 +67,13 @@ const Navber = () => {
           <div className="hidden md:flex space-x-4">
             <Link
               to={"/login"}
-              className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
+              className="btn btn-outline btn-primary"
             >
               Login
             </Link>
             <Link
               to={"/register"}
-              className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
+              className="btn btn-primary"
             >
               Sign Up
             </Link>
@@ -103,13 +104,14 @@ const Navber = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-blue-400 text-white px-4 pt-4 pb-6 space-y-4">
+        <div className="md:hidden my-bg mt-3 text-white px-4 pt-4 pb-6 space-y-4">
           <ul className="space-y-3">{links}</ul>
           {user ? (
             <button
               onClick={() => {
                 signOutUser();
               }}
+              className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition"
             >
               LogOut
             </button>
