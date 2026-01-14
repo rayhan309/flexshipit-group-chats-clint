@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import { use } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router";
@@ -28,16 +28,16 @@ const Register = () => {
     } catch {
       toast.error("SingUp has not a success!");
     }
-    console.log("Registration Data:", data);
+    // console.log("Registration Data:", data);
     // alert(`Welcome to ChatNest, ${data.name}!`);
   };
 
   const password = watch("password", "");
 
   return (
-    <div className="min-h-screen flex items-center justify-center my-bg my-2">
+    <div className="min-h-screen flex items-center justify-center my-5 mb-10">
       <motion.div
-        className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md"
+        className="bg-white/20 p-10 rounded-2xl shadow-xl w-full max-w-md"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -49,7 +49,7 @@ const Register = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Name</label>
+            <label className="block text-gray-300 font-medium mb-1">Name</label>
             <input
               type="text"
               placeholder="Your Name"
@@ -67,11 +67,12 @@ const Register = () => {
 
           {/* photo url */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block text-gray-300 font-medium mb-1">
               Photo URL
             </label>
             <input
               type="text"
+              placeholder="Photo URL"
               {...register("photo", { required: "Photo is required" })}
               className={`w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${
                 errors.photo
@@ -86,7 +87,7 @@ const Register = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block text-gray-300  font-medium mb-1">
               Email
             </label>
             <input
@@ -114,7 +115,7 @@ const Register = () => {
 
           {/* Password */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block text-gray-300 font-medium mb-1">
               Password
             </label>
             <input
@@ -142,7 +143,7 @@ const Register = () => {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block text-gray-300 font-medium mb-1">
               Confirm Password
             </label>
             <input

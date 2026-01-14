@@ -1,8 +1,9 @@
 import React, { use } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const {sigInUser} = use(AuthContext);
@@ -11,20 +12,24 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const loacation = useLocation();
+    const navigate = useNavigate();
+    console.log(loacation)
 
     const onSubmit = (data) => {
-        console.log("Form Data:", data);
+        // console.log("Form Data:", data);
         sigInUser(data?.email, data?.password).then(() => {
-            alert(`Welcome back!`);
+            toast.success(`Welcome back!`);
+            navigate(loacation.state);
         }).catch((err) => {
-            console.log(err)
+            console.log(err);
         });
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center my-bg my-2">
+        <div className="min-h-screen flex justify-center py-10">
             <motion.div
-                className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md"
+                className="bg-white/20 p-10 rounded-2xl shadow-xl w-full max-w-md border border-white/50"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
@@ -36,7 +41,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     {/* Email */}
                     <div>
-                        <label className="block text-gray-700 font-medium mb-1">Email</label>
+                        <label className="block text-gray-300 font-medium mb-1">Email</label>
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -50,7 +55,7 @@ const Login = () => {
 
                     {/* Password */}
                     <div>
-                        <label className="block text-gray-700 font-medium mb-1">Password</label>
+                        <label className="block text-gray-300 font-medium mb-1">Password</label>
                         <input
                             type="password"
                             placeholder="Enter your password"
@@ -73,10 +78,10 @@ const Login = () => {
 
                 {/* Additional Links */}
                 <div className="mt-4 text-center">
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-500 text-sm">
                         Don't have an account? <Link to={'/register'} className="text-blue-500 font-semibold cursor-pointer hover:underline">Sign Up</Link>
                     </p>
-                    <p className="text-gray-600 text-sm mt-2 cursor-pointer hover:underline">
+                    <p className="text-gray-500 text-sm mt-2 cursor-pointer hover:underline">
                         Forgot Password?
                     </p>
                 </div>

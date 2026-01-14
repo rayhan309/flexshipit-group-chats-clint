@@ -9,7 +9,7 @@ import {
 import { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 
-const socket = io("http://localhost:4800");
+const socket = io(import.meta.env.VITE_serverURL);
 
 const Chats = () => {
   const { user } = use(AuthContext);
@@ -41,26 +41,6 @@ const Chats = () => {
       socket.off("receiveMessage");
     };
   }, [user?.displayName]);
-
-  // useEffect(() => {
-  //   socket.on("typer", (typerName) => {
-  //     setTypingUser(typerName);
-  //   });
-
-  //   return () => socket.off("typer");
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!newMessage?.trim()) return;
-
-  //   const timeout = setTimeout(() => {
-  //     socket.emit("typing", user.displayName);
-  //   }, 300);
-
-  //   return () => clearTimeout(timeout);
-  // }, [newMessage]);
-
-  // if (!newMessage?.trim()) if (!newMessage?.trim());
 
   const handleSend = () => {
     if (!newMessage.trim()) return;
@@ -96,19 +76,16 @@ const Chats = () => {
                 : "bg-white text-gray-700"
             }`}
           >
+            <h2 className="text-lg font-bold">{msg.sender}</h2>
             <p>{msg.text}</p>
             <span className="text-xs opacity-70">{msg.time}</span>
-
-            <p>{index + 1}</p>
+            
           </div>
         ))}
       </div>
 
       {/* Input */}
       <div className="p-4 relative bg-white/20 border-t flex gap-3">
-        <div className={`absolute top-0`}>
-          <FaPhotoVideo />
-        </div>
         <button
           onClick={() => {}}
           className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600"
@@ -130,7 +107,7 @@ const Chats = () => {
           <FaPaperPlane />
         </button>
 
-        <button className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600">
+        <button className="bg-blue-500 hidden md:block text-white px-4 rounded-lg hover:bg-blue-600">
           <FaHeadset />
         </button>
       </div>

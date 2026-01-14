@@ -15,11 +15,12 @@ const Navber = () => {
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/"}>Home</NavLink>
       </li>
-      <li className="hover:underline cursor-pointer">Features</li>
-      <li className="hover:underline cursor-pointer">Pricing</li>
-      <li className="hover:underline cursor-pointer">
+      <li className="hover:underline cursor-pointer"><NavLink to={'/features'}>Features</NavLink></li>
+      {
+        user &&  <li className="hover:underline cursor-pointer">
         <Link to={"/chats"}>Chats</Link>
       </li>
+      }
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/contact"}>Contact</NavLink>
       </li>
