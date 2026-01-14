@@ -20,6 +20,14 @@ li .active {
   @apply text-primary underline
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 50px;
+}
+
 
 /* From Uiverse.io by SelfMadeSystem */ 
 /*

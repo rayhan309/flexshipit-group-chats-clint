@@ -47,9 +47,9 @@ const Banner = () => {
               <Link to={user ? '/chats' : '/login'} className="btn btn-primary">
                 Get Started
               </Link>
-              <button className="btn btn-outline btn-primary">
+              <Link to={'/about'} className="btn btn-outline btn-primary">
                 Learn More
-              </button>
+              </Link>
             </div>
           </motion.div>
 

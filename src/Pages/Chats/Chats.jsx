@@ -8,6 +8,9 @@ import {
 import { use } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { formatDistanceToNow } from "date-fns";
+import useAxiosSuer from "../../hooks/useAxiosSuer";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../Loading/Loading";
 
 const socket = io(import.meta.env.VITE_serverURL);
 
@@ -15,10 +18,16 @@ const Chats = () => {
   const { user } = use(AuthContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  // const [typingUser, setTypingUser] = useState([]);
-  // console.log(newMessage);
+  const axiosSquer = useAxiosSuer();
+  const {data: users, isLoading} = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSquer.get('/users');
+      return res.data;
+    }
+  });
 
-  useEffect(() => {
+    useEffect(() => {
     if (!user?.displayName) return;
 
     socket.emit("userName", user.displayName);
@@ -41,6 +50,10 @@ const Chats = () => {
       socket.off("receiveMessage");
     };
   }, [user?.displayName]);
+
+  if(isLoading) return <Loading />
+
+  console.log(users);
 
   const handleSend = () => {
     if (!newMessage.trim()) return;
