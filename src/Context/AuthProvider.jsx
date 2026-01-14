@@ -3,6 +3,8 @@ import { AuthContext } from "./AuthContext";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -39,6 +41,14 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  const userEmailVerify = () => {
+    return sendEmailVerification(auth.currentUser)
+  };
+
+  const userPassReset = (email) => {
+    return sendPasswordResetEmail(auth, email)
+  }
+
   //   current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -53,7 +63,9 @@ const AuthProvider = ({ children }) => {
     createUser,
     sigInUser,
     signOutUser,
+    userEmailVerify,
     updateUserProfile,
+    userPassReset,
     user,
     loading
   };

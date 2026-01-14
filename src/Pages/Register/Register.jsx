@@ -7,7 +7,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = use(AuthContext);
+  const { createUser, updateUserProfile, userEmailVerify } = use(AuthContext);
   const navigate = useNavigate();
   const {
     register,
@@ -66,8 +66,9 @@ const onSubmit = async (data) => {
 
     await createUser(data.email, data.confirmPassword);
     await updateUserProfile(data.name, photoURL);
+    userEmailVerify();
 
-    navigate('/')
+    navigate('/');
 
     toast.success("Image uploaded successfully!");
 
