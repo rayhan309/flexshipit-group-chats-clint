@@ -1,5 +1,5 @@
-import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const About = () => {
   return (
@@ -49,9 +49,9 @@ const About = () => {
             a reliable experience that feels natural, safe, and effortless.
           </p>
 
-          <button className="btn btn-primary">
+          <Link to={'/about'} className="btn btn-primary">
             Learn More
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

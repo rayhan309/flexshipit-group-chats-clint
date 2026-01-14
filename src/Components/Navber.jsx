@@ -18,9 +18,14 @@ const Navber = () => {
         <NavLink to={"/"}>Home</NavLink>
       </li>
       {user && (
+        <>
         <li className="hover:underline cursor-pointer">
           <NavLink to={"/chats"}>Chats</NavLink>
         </li>
+        <li className="hover:underline cursor-pointer">
+          <NavLink to={"/freinds"}>Freinds</NavLink>
+        </li>
+        </>
       )}
       <li className="hover:underline cursor-pointer">
         <NavLink to={"/features"}>Features</NavLink>

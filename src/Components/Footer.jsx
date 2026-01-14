@@ -4,6 +4,8 @@ import {
   FaInstagram,
   FaLinkedinIn,
 } from "react-icons/fa";
+import { Link } from "react-router";
+import logo from '../assets/logo.png'
 
 const Footer = () => {
   // const navItems = [
@@ -36,12 +38,12 @@ const Footer = () => {
       <div className="container mx-auto px-6 grid md:grid-cols-3 gap-12">
         {/* Logo & Description */}
         <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-lg">
-              C
-            </div>
-            <span className="text-xl font-bold">ChatNest</span>
-          </div>
+           {/* Logo Section */}
+        <Link className="flex items-center space-x-2">
+          <img className="rounded-full w-10 h-10" src={logo} alt="chats logo" />
+
+          <span className="font-semibold text-2xl"><span className="text-primary">Chat</span>Nest</span>
+        </Link>
           <p className="text-gray-400 text-sm max-w-xs">
             Connect, chat, and feel at home. ChatNest makes communication safe,
             fast, and effortless.

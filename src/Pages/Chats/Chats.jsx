@@ -1,81 +1,98 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
-import {
-  FaHeadset,
-  FaPaperclip,
-  FaPaperPlane,
-} from "react-icons/fa";
-import { use } from "react";
-import { AuthContext } from "../../Context/AuthContext";
+import { FaPaperPlane, FaMicrophone, FaStop } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
-import useAxiosSuer from "../../hooks/useAxiosSuer";
-import { useQuery } from "@tanstack/react-query";
-import Loading from "../Loading/Loading";
+import { AuthContext } from "../../Context/AuthContext";
 
 const socket = io(import.meta.env.VITE_serverURL);
 
 const Chats = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const axiosSquer = useAxiosSuer();
-  const {data: users, isLoading} = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axiosSquer.get('/users');
-      return res.data;
-    }
-  });
+  const [recording, setRecording] = useState(false);
 
-    useEffect(() => {
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+
+  // 🔌 Socket connection
+  useEffect(() => {
     if (!user?.displayName) return;
 
     socket.emit("userName", user.displayName);
 
-    socket.on("roomNotice", (userName) => {
-      console.log("New user:", userName);
+    socket.on("oldMessages", (msgs) => {
+      setMessages(msgs);
     });
 
-    socket.on("oldMessages", (messages) => {
-      setMessages(messages);
-    });
-
-    socket.on("receiveMessage", (message) => {
-      setMessages((prev) => [...prev, message]);
+    socket.on("receiveMessage", (msg) => {
+      setMessages((prev) => [...prev, msg]);
     });
 
     return () => {
-      socket.off("roomNotice");
       socket.off("oldMessages");
       socket.off("receiveMessage");
     };
   }, [user?.displayName]);
 
-  if(isLoading) return <Loading />
-
-  console.log(users);
-
+  // 📩 Send text message
   const handleSend = () => {
     if (!newMessage.trim()) return;
 
-    const messageData = {
+    socket.emit("sendMessage", {
+      type: "text",
       text: newMessage,
-      sender: user?.displayName,
-      time: new Date().toLocaleTimeString(),
-    };
+      sender: user.displayName,
+      time: new Date().toISOString(),
+    });
 
-    // setMessages((prev) => [...prev, messageData]);
-
-    socket.emit("sendMessage", messageData);
     setNewMessage("");
   };
 
+  // 🎤 Start recording
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        audioChunksRef.current.push(e.data);
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/webm",
+        });
+        const audioURL = URL.createObjectURL(audioBlob);
+
+        socket.emit("sendMessage", {
+          type: "audio",
+          audio: audioURL,
+          sender: user.displayName,
+          time: new Date().toISOString(),
+        });
+      };
+
+      mediaRecorderRef.current.start();
+      setRecording(true);
+    } catch {
+      alert("Microphone permission denied");
+    }
+  };
+
+  // ⏹️ Stop recording
+  const stopRecording = () => {
+    mediaRecorderRef.current.stop();
+    setRecording(false);
+  };
+
   return (
-    <div className="h-screen flex flex-col bg-gray-100/10">
+    <div className="h-screen flex flex-col ">
       {/* Header */}
-      <div className="p-4 bg-blue-500 text-white font-bold">
+      <div className="p-4 bg-blue-500 text-white font-bold text-center">
         ChatNest – Real-Time Chat
-        {/* {typingUser && <p>{typingUser} is typing...</p>} */}
       </div>
 
       {/* Messages */}
@@ -89,30 +106,47 @@ const Chats = () => {
                 : "bg-white text-gray-700"
             }`}
           >
-            <h2 className="text-lg font-bold">{msg.sender}</h2>
-            <p>{msg.text}</p>
-            {/* <span className="text-xs opacity-70">{msg.time}</span> */}
-              <span className="text-xs">
-                    {/* {chat.time}{" "} */}
-                    {msg.time
-                      ? formatDistanceToNow(new Date(msg.time), {
-                          addSuffix: true,
-                        })
-                      : "Recently"}
-                  </span>
+            <p className="text-xs font-semibold">{msg.sender}</p>
+
+            {/* Text message */}
+            {msg.type === "text" && <p>{msg.text}</p>}
+
+            {/* Voice message */}
+            {msg.type === "audio" && (
+              <audio controls src={msg.audio} className="mt-2 w-full" />
+            )}
+
+            <span className="text-[10px] opacity-70 block mt-1">
+              {msg.time
+                ? formatDistanceToNow(new Date(msg.time), {
+                    addSuffix: true,
+                  })
+                : "Recently"}
+            </span>
           </div>
         ))}
       </div>
 
       {/* Input */}
-      <div className="p-4 relative bg-white/20 border-t flex gap-3">
-        <button
-          onClick={() => {}}
-          className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600"
-        >
-          <FaPaperclip />
-        </button>
+      <div className="p-4 bg-white/20 border-t flex gap-3 items-center">
+        {/* Voice button */}
+        {!recording ? (
+          <button
+            onClick={startRecording}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          >
+            <FaMicrophone />
+          </button>
+        ) : (
+          <button
+            onClick={stopRecording}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg"
+          >
+            <FaStop />
+          </button>
+        )}
 
+        {/* Text input */}
         <input
           type="text"
           placeholder="Type a message..."
@@ -120,15 +154,13 @@ const Chats = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           className="flex-1 border rounded-lg px-4 py-2 focus:outline-none"
         />
+
+        {/* Send */}
         <button
           onClick={handleSend}
-          className="bg-blue-500 text-white px-4 rounded-lg hover:bg-blue-600"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
         >
           <FaPaperPlane />
-        </button>
-
-        <button className="bg-blue-500 hidden md:block text-white px-4 rounded-lg hover:bg-blue-600">
-          <FaHeadset />
         </button>
       </div>
     </div>

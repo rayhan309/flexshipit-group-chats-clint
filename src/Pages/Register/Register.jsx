@@ -49,6 +49,8 @@ const Register = () => {
       userEmailVerify();
       navigate("/");
 
+      window.location.reload()
+
       const newUser = {
         name: data?.name,
         email: data?.email,

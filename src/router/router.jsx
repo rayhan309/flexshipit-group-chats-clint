@@ -8,6 +8,7 @@ import Chats from "../Pages/Chats/Chats";
 import Features from "../Pages/Home/Features/Features";
 import PrivetPage from "../Context/PrivetPage";
 import AboutPage from "../Pages/AboutUS/AboutUS";
+import AllUsers from "../Pages/AllUsers/AllUsers";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: "/about",
                 Component: AboutPage
+            },
+            {
+                path: "/freinds",
+                Component: AllUsers
             },
         ]
     }
