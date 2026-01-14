@@ -41,10 +41,10 @@ const Features = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white/70">
-            Powerful Features for Modern Chat
+          <h2 className="text-3xl md:text-4xl font-bold text-white/80">
+            <span className="text-primary">Powerful Features</span> for Modern Chat
           </h2>
-          <p className="mt-4 text-gray-500 text-lg">
+          <p className="mt-4 text-gray-400 text-lg">
             Everything you need for secure, fast, and meaningful conversations in one platform.
           </p>
         </motion.div>
@@ -56,21 +56,21 @@ const Features = () => {
             return (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition duration-300"
+                className="my-bg rounded-2xl p-8 shadow-sm hover:shadow-2xl cursor-pointer transition duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
               >
-                <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-6">
+                <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-primary text-blue-100 mb-6">
                   <Icon className="w-6 h-6" />
                 </div>
 
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                <h3 className="text-xl font-semibold text-gray-300 mb-3">
                   {feature.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-400 text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>

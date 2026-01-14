@@ -41,7 +41,7 @@ const FAQ = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white/70">
-            Frequently Asked Questions
+            <span className="text-primary">Frequently</span> Asked Questions
           </h2>
           <p className="mt-4 text-gray-500 text-lg">
             Quick answers to the most common questions about ChatNest.
@@ -49,21 +49,21 @@ const FAQ = () => {
         </motion.div>
 
         {/* FAQ List */}
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-5xl mx-auto space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div
                 key={index}
-                className="border border-gray-200 rounded-2xl bg-white"
+                className="border border-gray-200/20 rounded-2xl my-bg"
               >
                 {/* Question */}
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
+                  className="w-full cursor-pointer flex items-center justify-between px-6 py-5 text-left"
                 >
-                  <span className="text-lg font-medium text-gray-900">
+                  <span className="text-lg font-medium text-gray-300">
                     {faq.question}
                   </span>
 
@@ -86,7 +86,7 @@ const FAQ = () => {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-5 text-gray-600 leading-relaxed">
+                      <p className="px-6 pb-5 text-gray-400 leading-relaxed">
                         {faq.answer}
                       </p>
                     </motion.div>

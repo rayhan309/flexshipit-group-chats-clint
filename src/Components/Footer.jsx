@@ -1,7 +1,15 @@
-import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa"; 
+import { Link } from "react-router";
 
 const Footer = () => {
+
+  const links = <>
+  <li className="hover:text-white transition hover:underline cursor-pointer">Home</li>
+  <li className="hover:text-white transition hover:underline cursor-pointer">Features</li>
+  <li className="hover:text-white transition hover:underline cursor-pointer">About</li>
+  <li className="hover:text-white transition hover:underline cursor-pointer">Contact</li>
+  </>
+
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-6">
       <div className="container mx-auto px-6 grid md:grid-cols-3 gap-12">
@@ -23,11 +31,7 @@ const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Quick Links</h3>
           <ul className="space-y-2 text-gray-400 text-sm">
-            {["Home", "Features", "Pricing", "About", "Contact"].map((link, i) => (
-              <li key={i} className="hover:text-white transition cursor-pointer">
-                {link}
-              </li>
-            ))}
+           {links}
           </ul>
         </div>
 
@@ -35,9 +39,11 @@ const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Follow Us</h3>
           <div className="flex space-x-4 text-gray-400">
-            <a href="#" className="hover:text-white transition">
+            <button onClick={() => {
+              window.location.origin = "https://www.facebook.com/profile.php?id=100082830604559"
+            }} to="https://www.facebook.com/profile.php?id=100082830604559" className="hover:text-white transition">
               <FaFacebookF size={18} />
-            </a>
+            </button>
             <a href="#" className="hover:text-white transition">
               <FaTwitter size={18} />
             </a>

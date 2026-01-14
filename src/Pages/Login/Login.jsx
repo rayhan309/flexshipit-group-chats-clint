@@ -20,16 +20,16 @@ const Login = () => {
         // console.log("Form Data:", data);
         sigInUser(data?.email, data?.password).then(() => {
             toast.success(`Welcome back!`);
-            navigate(loacation.state);
+            navigate(loacation.state || '/');
         }).catch((err) => {
             console.log(err);
         });
     };
 
     return (
-        <div className="min-h-screen flex justify-center py-10">
+        <div className="flex justify-center py-10">
             <motion.div
-                className="bg-white/20 p-10 rounded-2xl shadow-xl w-full max-w-md border border-white/50"
+                className="bg-gradient-to-br from-blue-600/10 via-indigo-600/10 to-teal-500/5 p-10 rounded-2xl shadow-xl w-full max-w-md border border-white/50"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}

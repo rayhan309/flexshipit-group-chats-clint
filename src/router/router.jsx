@@ -7,6 +7,7 @@ import Register from "../Pages/Register/Register";
 import Chats from "../Pages/Chats/Chats";
 import Features from "../Pages/Home/Features/Features";
 import PrivetPage from "../Context/PrivetPage";
+import AboutPage from "../Pages/AboutUS/AboutUS";
 
 export const router = createBrowserRouter([
     {
@@ -36,8 +37,12 @@ export const router = createBrowserRouter([
                 </PrivetPage>,
             },
             {
-                path: "features",
+                path: "/features",
                 Component: Features
+            },
+            {
+                path: "/about",
+                Component: AboutPage
             },
         ]
     }
