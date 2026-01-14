@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 const Navber = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, signOutUser } = use(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
