@@ -3,7 +3,7 @@ import { use, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 
 const axiosSquer = axios.create({
-    baseURL: "http://localhost:4800"
+    baseURL: "https://chatnest-gp6h.onrender.com"
 })
 
 const useAxiosSuer = () => {
