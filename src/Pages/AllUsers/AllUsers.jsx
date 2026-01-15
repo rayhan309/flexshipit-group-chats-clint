@@ -71,7 +71,7 @@ const AllUsers = () => {
                     {user?.name}
                   </h3>
 
-                  <p className="flex items-center gap-2 text-sm text-gray-500">
+                  <p className="flex items-center gap-2 text-sm text-gray-500 truncate">
                     <FaEnvelope className="text-xs" />
                     {user?.email}
                   </p>

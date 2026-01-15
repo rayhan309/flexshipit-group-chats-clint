@@ -49,8 +49,8 @@ const Contact = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-4">
-            Get in Touch
+          <h2 className="text-3xl md:text-4xl font-bold text-white/80 mb-4">
+            Get in <span className="text-primary">Touch</span> 
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Have questions or feedback? We'd love to hear from you. Fill out the

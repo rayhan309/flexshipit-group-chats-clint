@@ -1,5 +1,4 @@
-import React from "react";
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
 import Navber from "../../Components/Navber";
 import Footer from "../../Components/Footer";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +13,7 @@ const RootLayout = () => {
     <Loading />
   ) : (
     <div className="z-50">
+      <ScrollRestoration></ScrollRestoration>
       <Navber />
       <main className={`min-h-[calc(100vh-340px)]`}>
         <Outlet />

@@ -19,16 +19,16 @@ const Footer = () => {
   const links = (
     <>
       <li className="hover:text-white transition hover:underline cursor-pointer">
-        Home
+        <Link to={'/'}>Home</Link>
       </li>
       <li className="hover:text-white transition hover:underline cursor-pointer">
-        Features
+        <Link to={'/features'}>Features</Link>
       </li>
       <li className="hover:text-white transition hover:underline cursor-pointer">
-        About
+       <Link to={'/about'}>About</Link>
       </li>
       <li className="hover:text-white transition hover:underline cursor-pointer">
-        Contact
+        <Link to={'/contact'}>Contact</Link>
       </li>
     </>
   );
@@ -60,18 +60,15 @@ const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Follow Us</h3>
           <div className="flex space-x-4 text-gray-400">
-            <button className="hover:text-white transition">
+            <Link to={'https://www.facebook.com/profile.php?id=100082830604559'} className="hover:text-white transition">
               <FaFacebookF size={18} />
-            </button>
-            <button className="hover:text-white transition">
-              <FaTwitter size={18} />
-            </button>
-            <button className="hover:text-white transition">
+            </Link>
+            <Link to={'https://www.instagram.com/'} className="hover:text-white transition">
               <FaInstagram size={18} />
-            </button>
-            <button className="hover:text-white transition">
+            </Link>
+            <Link to={'https://www.linkedin.com/in/abu-rayhan-undefined-2514b5390'} className="hover:text-white transition">
               <FaLinkedinIn size={18} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
