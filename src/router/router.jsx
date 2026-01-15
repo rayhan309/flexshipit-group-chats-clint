@@ -47,7 +47,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/freinds",
-                Component: AllUsers
+                element: <PrivetPage>
+                    <AllUsers />
+                </PrivetPage>
             },
         ]
     }
