@@ -49,8 +49,6 @@ const Register = () => {
       userEmailVerify();
       navigate("/");
 
-      window.location.reload()
-
       const newUser = {
         name: data?.name,
         email: data?.email,
@@ -59,6 +57,7 @@ const Register = () => {
 
       await axiosSquer.post(`/users`, newUser);
 
+      window.location.reload();
 
       toast.success("Image uploaded successfully!");
     } catch (error) {
