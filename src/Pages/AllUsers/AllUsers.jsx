@@ -25,7 +25,7 @@ const AllUsers = () => {
     <div className="container mx-auto px-4 py-10">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold">ChatNest Community</h2>
+        <h2 className="text-3xl font-bold"><span className="text-primary">ChatNest</span> Community</h2>
         <p className="text-gray-500 mt-2">
           Connect with people across ChatNest
         </p>
