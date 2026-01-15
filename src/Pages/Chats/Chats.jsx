@@ -152,7 +152,7 @@ const Chats = () => {
           placeholder="Type a message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          className="md:flex-1 border rounded-lg px-4 py-2 focus:outline-none"
+          className="w-full border rounded-lg px-4 py-2 focus:outline-none"
         />
 
         {/* Send */}
